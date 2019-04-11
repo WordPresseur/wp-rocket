@@ -59,4 +59,20 @@ if ( 'uncode' === strtolower( $current_theme->get( 'Name' ) ) || 'uncode' === st
 		return $exclude_defer_js;
 	}
 	add_filter( 'rocket_exclude_defer_js', 'rocket_exclude_defer_js_uncode' );
+	
+	/**
+ 	* Exclude files from WP Rocket’s cache busting.
+ 	*
+ 	* @author Romain VINCENT
+ 	* @param  array  excluded_busting_js   Array of JS filepaths to be excluded.
+ 	* @return array
+ 	*/
+	function rocket_exclude_busting_js_uncode( array $excluded_busting_js ) {
+		$excluded_files[] = rocket_clean_exclude_file( get_template_directory_uri() . '/library/js/app.js' );
+		$excluded_files[] = rocket_clean_exclude_file( get_template_directory_uri() . '/library/js/init.js' );
+		$excluded_files[] = rocket_clean_exclude_file( get_template_directory_uri() . '/library/js/plugins.js' );
+
+	return $excluded_busting_js;
+}
+	add_filter( 'rocket_exclude_cache_busting', 'rocket_exclude_busting_js_uncode' );
 }
